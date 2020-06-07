@@ -160,6 +160,8 @@ class air_conditioning_device(device):
             cmd.swing_mode = self._swing_mode.value
             cmd.eco_mode = self._eco_mode
             cmd.turbo_mode = self._turbo_mode
+            cmd.night_light = False
+            print('night light')
 
             pkt_builder = packet_builder()
             pkt_builder.set_command(cmd)

@@ -101,6 +101,16 @@ class set_command(base_command):
     def turbo_mode(self, turbo_mode_enabled: bool):
         self.data[0x14] = 0x02 if turbo_mode_enabled else 0
 
+    @property
+    def night_light(self):
+        return self.data[0x14] & 0x10 > 0
+
+    @night_light.setter
+    def night_light(self, on: bool):   # This needs a better name, dunno what it actually means
+        if (on):
+            self.data[0x14] |= 0x10
+        else:
+            self.data[0x14] &= (~0x10)
 
 class appliance_response:
 
