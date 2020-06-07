@@ -112,6 +112,17 @@ class set_command(base_command):
         else:
             self.data[0x14] &= (~0x10)
 
+    @property
+    def dot5(self):
+        return self.data[0x0c] & 0x10 > 0
+
+    @dot5.setter
+    def dot5(self, on: bool):   # This needs a better name, dunno what it actually means
+        if (on):
+            self.data[0x0c] |= 0x10
+        else:
+            self.data[0x0c] &= (~0x10)
+            
 class appliance_response:
 
     def __init__(self, data: bytearray):
