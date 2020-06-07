@@ -161,7 +161,8 @@ class air_conditioning_device(device):
             cmd.eco_mode = self._eco_mode
             cmd.turbo_mode = self._turbo_mode
             cmd.night_light = False
-            cmd.dot5 = True
+#            cmd.dot5 = True
+            cmd.fahrenheit = True
             print('+0.5')
             pkt_builder = packet_builder()
             pkt_builder.set_command(cmd)

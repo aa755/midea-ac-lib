@@ -55,9 +55,8 @@ class set_command(base_command):
 
     @target_temperature.setter
     def target_temperature(self, temperature_celsius: int):
-        self.data[0x0c] &= ~ 0x1f  # Clear the temperature bits
-        self.data[0x0c] |= (temperature_celsius & 0xf) | (
-            (temperature_celsius << 4) & 0x10)
+        self.data[0x0c] &= ~ 0x0f  # Clear the temperature bits
+        self.data[0x0c] |= (temperature_celsius & 0xf)
 
     @property
     def operational_mode(self):
@@ -122,7 +121,18 @@ class set_command(base_command):
             self.data[0x0c] |= 0x10
         else:
             self.data[0x0c] &= (~0x10)
-            
+
+    @property
+    def fahrenheit(self):
+        return self.data[0x0c] & 0x10 > 0
+
+    @dot5.setter
+    def fahrenheit(self, on: bool):   # This needs a better name, dunno what it actually means
+        if (on):
+            self.data[0x14] |= 0x04
+        else:
+            self.data[0x14] &= (~0x04)
+
 class appliance_response:
 
     def __init__(self, data: bytearray):
