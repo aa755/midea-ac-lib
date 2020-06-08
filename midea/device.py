@@ -131,7 +131,7 @@ class air_conditioning_device(device):
         self._swing_mode = air_conditioning_device.swing_mode_enum.Off
         self._eco_mode = False
         self._turbo_mode = False
-        self.farenheit_unit = True
+        self.farenheit_unit = False # default unit is Celcius
 
         self._on_timer = None
         self._off_timer = None
@@ -163,7 +163,6 @@ class air_conditioning_device(device):
             cmd.turbo_mode = self._turbo_mode
             cmd.night_light = False
             cmd.fahrenheit = self.farenheit_unit
-#            print('+0.5')
             pkt_builder = packet_builder()
             pkt_builder.set_command(cmd)
 
@@ -217,7 +216,7 @@ class air_conditioning_device(device):
         return self._target_temperature
 
     @target_temperature.setter
-    def target_temperature(self, temperature: float):
+    def target_temperature(self, temperature: float): # the implementation later rounds the temperature down to the nearest 0.5 resolution
         if self._updating:
             self._defer_update = True
         self._target_temperature = temperature

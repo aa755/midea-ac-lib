@@ -106,7 +106,7 @@ class set_command(base_command):
         return self.data[0x14] & 0x10 > 0
 
     @night_light.setter
-    def night_light(self, on: bool):   # This needs a better name, dunno what it actually means
+    def night_light(self, on: bool):   # the LED lights on the AC. these display temperature and are often too bright during nights
         if (on):
             self.data[0x14] |= 0x10
         else:
@@ -117,18 +117,18 @@ class set_command(base_command):
         return self.data[0x0c] & 0x10 > 0
 
     @dot5.setter
-    def dot5(self, on: bool):   # This needs a better name, dunno what it actually means
+    def dot5(self, on: bool):   # add 0.5C to the temperature value. not intended to be called directly. target_temperature setter calls this if needed
         if (on):
             self.data[0x0c] |= 0x10
         else:
             self.data[0x0c] &= (~0x10)
 
     @property
-    def fahrenheit(self):
+    def fahrenheit(self): # is the temperature unit fahrenheit? (celcius otherwise)
         return self.data[0x0c] & 0x10 > 0
 
     @dot5.setter
-    def fahrenheit(self, on: bool):   # This needs a better name, dunno what it actually means
+    def fahrenheit(self, on: bool): # set the unit to fahrenheit from celcius
         if (on):
             self.data[0x14] |= 0x04
         else:
