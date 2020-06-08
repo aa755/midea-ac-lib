@@ -131,7 +131,7 @@ class air_conditioning_device(device):
         self._swing_mode = air_conditioning_device.swing_mode_enum.Off
         self._eco_mode = False
         self._turbo_mode = False
-        self.farenheit_unit = True # fix: default was celcius before
+        self.farenheit_unit = False # default unit is Celcius
 
         self._on_timer = None
         self._off_timer = None
