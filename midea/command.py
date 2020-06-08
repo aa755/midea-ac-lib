@@ -54,9 +54,10 @@ class set_command(base_command):
         return self.data[0x0c] & 0x1f
 
     @target_temperature.setter
-    def target_temperature(self, temperature_celsius: int):
+    def target_temperature(self, temperature_celsius: float):
         self.data[0x0c] &= ~ 0x0f  # Clear the temperature bits
-        self.data[0x0c] |= (temperature_celsius & 0xf)
+        self.data[0x0c] |= (int(temperature_celsius) & 0xf)
+        self.dot5 = (int(round(temperature_celsius*2)) % 2 != 0) # set the +0.5 bit if that will result in a closer match go the float value
 
     @property
     def operational_mode(self):

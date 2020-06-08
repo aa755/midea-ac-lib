@@ -125,12 +125,13 @@ class air_conditioning_device(device):
 
         self._audible_feedback = False
         self._power_state = False
-        self._target_temperature = 17
+        self._target_temperature = 17.0
         self._operational_mode = air_conditioning_device.operational_mode_enum.auto
         self._fan_speed = air_conditioning_device.fan_speed_enum.Auto
         self._swing_mode = air_conditioning_device.swing_mode_enum.Off
         self._eco_mode = False
         self._turbo_mode = False
+        self.farenheit_unit = True
 
         self._on_timer = None
         self._off_timer = None
@@ -161,9 +162,8 @@ class air_conditioning_device(device):
             cmd.eco_mode = self._eco_mode
             cmd.turbo_mode = self._turbo_mode
             cmd.night_light = False
-#            cmd.dot5 = True
-            cmd.fahrenheit = True
-            print('+0.5')
+            cmd.fahrenheit = self.farenheit_unit
+#            print('+0.5')
             pkt_builder = packet_builder()
             pkt_builder.set_command(cmd)
 
@@ -217,7 +217,7 @@ class air_conditioning_device(device):
         return self._target_temperature
 
     @target_temperature.setter
-    def target_temperature(self, temperature: int):
+    def target_temperature(self, temperature: float):
         if self._updating:
             self._defer_update = True
         self._target_temperature = temperature
