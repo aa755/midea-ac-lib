@@ -162,7 +162,7 @@ class appliance_response:
     # Byte 0x02
     @property
     def target_temperature(self):
-        return (self.data[0x02] & 0xf) + 16
+        return (self.data[0x02] & 0xf) + 16.0 + (0.5 if self.data[0x02] & 0x10 > 0 else 0.0)
 
     @property
     def operational_mode(self):
