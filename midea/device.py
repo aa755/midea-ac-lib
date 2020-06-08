@@ -131,7 +131,7 @@ class air_conditioning_device(device):
         self._swing_mode = air_conditioning_device.swing_mode_enum.Off
         self._eco_mode = False
         self._turbo_mode = False
-        self.farenheit_unit = False # default unit is Celcius
+        self.farenheit_unit = False # default unit is Celcius. this is just to control the temperatue unit of the AC's display. the target_temperature setter always expects a celcius temperature (resolution of 0.5C), as does the midea API
 
         self._on_timer = None
         self._off_timer = None
@@ -216,10 +216,10 @@ class air_conditioning_device(device):
         return self._target_temperature
 
     @target_temperature.setter
-    def target_temperature(self, temperature: float): # the implementation later rounds the temperature down to the nearest 0.5 resolution
+    def target_temperature(self, temperature_celsius: float): # the implementation later rounds the temperature down to the nearest 0.5'C resolution.
         if self._updating:
             self._defer_update = True
-        self._target_temperature = temperature
+        self._target_temperature = temperature_celsius
 
     @property
     def operational_mode(self):
